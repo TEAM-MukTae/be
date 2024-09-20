@@ -35,6 +35,7 @@ public enum ErrorCode {
 
     // Record
     RECORD_NOT_FOUND(400, "R002", "레코드를 찾지 못했습니다"),
+    ALREADY_SUMMARIZED(400, "R003", "이미 요약된 음성입니다."),
 
     // OAuth
     OAUTH_NOT_FOUND(404, "O001", "유저의 refresh token을 찾을 수 없습니다."),
