@@ -21,9 +21,4 @@ jobs:
                   script_stop: true
                   script: |
                       pwd
-                      ifconfig
-                      cd ./be/spring
-                      git pull origin main
-                      ./gradlew clean build
-                      cd ..
-                      docker-compose up --build -d
+                      ls -al
