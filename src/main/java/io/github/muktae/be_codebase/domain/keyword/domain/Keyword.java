@@ -1,5 +1,6 @@
 package io.github.muktae.be_codebase.domain.keyword.domain;
 
+import io.github.muktae.be_codebase.domain.record.domain.Record;
 import io.github.muktae.be_codebase.domain.recordsummary.domain.RecordSummary;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,8 @@ public class Keyword {
     private RecordSummary recordSummary;
 
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "records_id")
+    private Record record;
 }

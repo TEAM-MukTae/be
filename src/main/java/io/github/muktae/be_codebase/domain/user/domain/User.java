@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SQLRestriction("deleted_at is null")
-@Table(name = "user")
+@Table(name = "users")
 public class User extends BaseEntityWithUpdate {
 
     @Id
@@ -41,13 +41,13 @@ public class User extends BaseEntityWithUpdate {
 
     private LocalDateTime deletedAt;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<WorkBook> workBooks = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bookmark> bookmarks = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WorkBook> workBooks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Record> records = new ArrayList<>();
 
     public User(String email, String nickName, SocialCode socialCode) {

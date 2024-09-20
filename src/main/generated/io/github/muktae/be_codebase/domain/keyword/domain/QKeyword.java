@@ -26,6 +26,8 @@ public class QKeyword extends EntityPathBase<Keyword> {
 
     public final StringPath name = createString("name");
 
+    public final io.github.muktae.be_codebase.domain.record.domain.QRecord record;
+
     public final io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary recordSummary;
 
     public QKeyword(String variable) {
@@ -46,6 +48,7 @@ public class QKeyword extends EntityPathBase<Keyword> {
 
     public QKeyword(Class<? extends Keyword> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.record = inits.isInitialized("record") ? new io.github.muktae.be_codebase.domain.record.domain.QRecord(forProperty("record"), inits.get("record")) : null;
         this.recordSummary = inits.isInitialized("recordSummary") ? new io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary(forProperty("recordSummary"), inits.get("recordSummary")) : null;
     }
 
