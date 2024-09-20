@@ -1,0 +1,51 @@
+package io.github.muktae.be_codebase.domain.record.controller;
+
+import io.github.muktae.be_codebase.common.resolver.AuthUser;
+import io.github.muktae.be_codebase.common.response.SuccessResponse;
+import io.github.muktae.be_codebase.common.security.jwt.JwtTokenInfo;
+import io.github.muktae.be_codebase.domain.record.dto.RecordRequest;
+import io.github.muktae.be_codebase.domain.record.dto.RecordResponse;
+import io.github.muktae.be_codebase.domain.record.service.RecordService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/audio")
+public class RecordController {
+
+    private final RecordService recordService;
+
+    @GetMapping("")
+    public ResponseEntity<SuccessResponse<List<RecordResponse.GetVoiceList>>> getRecords(
+            @AuthUser JwtTokenInfo token
+    ) {
+        return SuccessResponse.of(
+                recordService.getRecords(token.getUserId())
+        ).setStatus(HttpStatus.OK);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<SuccessResponse<RecordResponse.Create>> uploadVoice(
+            @AuthUser JwtTokenInfo jwtTokenInfo,
+            @RequestBody RecordRequest.Create recordRequest
+    ) {
+        return SuccessResponse.of(
+                recordService.uploadWithKafka(jwtTokenInfo.getUserId(), recordRequest)
+        ).setStatus(HttpStatus.OK);
+    }
+
+    @GetMapping("/{recordId}")
+    public ResponseEntity<SuccessResponse<RecordResponse.Detail>> detail(
+            @AuthUser JwtTokenInfo jwtTokenInfo,
+            @PathVariable("recordId") Long recordId
+    ) {
+        return SuccessResponse.of(
+                recordService.getRecordDetail(jwtTokenInfo.getUserId(), recordId)
+        ).setStatus(HttpStatus.OK);
+    }
+}
