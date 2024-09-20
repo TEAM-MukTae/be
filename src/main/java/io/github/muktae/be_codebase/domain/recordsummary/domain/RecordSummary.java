@@ -1,12 +1,16 @@
 package io.github.muktae.be_codebase.domain.recordsummary.domain;
 
 import io.github.muktae.be_codebase.common.entity.BaseEntity;
+import io.github.muktae.be_codebase.domain.keyword.domain.Keyword;
 import io.github.muktae.be_codebase.domain.record.domain.Record;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "record_summaries")
@@ -26,5 +30,8 @@ public class RecordSummary extends BaseEntity {
     private Record record;
 
     private String summary;
+
+    @OneToMany(mappedBy = "recordSummary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Keyword> keywords = new ArrayList<>();
 
 }
