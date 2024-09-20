@@ -20,6 +20,8 @@ jobs:
                   key: ${{ secrets.EC2_PRIVATE_KEY }}
                   script_stop: true
                   script: |
+                      pwd
+                      ifconfig
                       cd ./be/spring
                       git pull origin main
                       ./gradlew clean build
