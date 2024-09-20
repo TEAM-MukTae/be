@@ -18,7 +18,7 @@ public class KafkaConsumer {
 
 
     @KafkaListener(topics = SUMMARY_DONE_TOPIC, groupId = "my-group")
-    public void listenToSummaryDoneSignal(String id) {
-        log.info("Received Message: " + id);
+    public void listenToSummaryDoneSignal() {
+        log.info("Received Message: ");
     }
 }

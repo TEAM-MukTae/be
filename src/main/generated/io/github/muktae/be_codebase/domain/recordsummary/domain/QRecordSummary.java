@@ -29,6 +29,8 @@ public class QRecordSummary extends EntityPathBase<RecordSummary> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final ListPath<io.github.muktae.be_codebase.domain.keyword.domain.Keyword, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword> keywords = this.<io.github.muktae.be_codebase.domain.keyword.domain.Keyword, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword>createList("keywords", io.github.muktae.be_codebase.domain.keyword.domain.Keyword.class, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword.class, PathInits.DIRECT2);
+
     public final io.github.muktae.be_codebase.domain.record.domain.QRecord record;
 
     public final StringPath summary = createString("summary");
