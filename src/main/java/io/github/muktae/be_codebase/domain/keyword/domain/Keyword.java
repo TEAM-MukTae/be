@@ -30,4 +30,15 @@ public class Keyword {
     private Record record;
 
     private String name;
+
+    public static Keyword from(String keywordName, Record record, RecordSummary recordSummary) {
+        Keyword keyword = Keyword.builder()
+                .name(keywordName)
+                .record(record)
+                .recordSummary(recordSummary)
+                .build();
+        recordSummary.getKeywords().add(keyword);
+        record.getKeywords().add(keyword);
+        return keyword;
+    }
 }

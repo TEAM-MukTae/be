@@ -20,7 +20,7 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final io.github.muktae.be_codebase.common.entity.QBaseEntityWithUpdate _super = new io.github.muktae.be_codebase.common.entity.QBaseEntityWithUpdate(this);
+    public final io.github.muktae.be_codebase.common.entity.QBaseEntity _super = new io.github.muktae.be_codebase.common.entity.QBaseEntity(this);
 
     public final ListPath<io.github.muktae.be_codebase.domain.bookmark.domain.Bookmark, io.github.muktae.be_codebase.domain.bookmark.domain.QBookmark> bookmarks = this.<io.github.muktae.be_codebase.domain.bookmark.domain.Bookmark, io.github.muktae.be_codebase.domain.bookmark.domain.QBookmark>createList("bookmarks", io.github.muktae.be_codebase.domain.bookmark.domain.Bookmark.class, io.github.muktae.be_codebase.domain.bookmark.domain.QBookmark.class, PathInits.DIRECT2);
 
@@ -36,9 +36,6 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath nickName = createString("nickName");
 
     public final ListPath<io.github.muktae.be_codebase.domain.record.domain.Record, io.github.muktae.be_codebase.domain.record.domain.QRecord> records = this.<io.github.muktae.be_codebase.domain.record.domain.Record, io.github.muktae.be_codebase.domain.record.domain.QRecord>createList("records", io.github.muktae.be_codebase.domain.record.domain.Record.class, io.github.muktae.be_codebase.domain.record.domain.QRecord.class, PathInits.DIRECT2);
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public final EnumPath<UserRole> userRole = createEnum("userRole", UserRole.class);
 

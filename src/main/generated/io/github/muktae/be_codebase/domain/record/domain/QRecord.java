@@ -31,6 +31,8 @@ public class QRecord extends EntityPathBase<Record> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isSummarized = createBoolean("isSummarized");
+
     public final ListPath<io.github.muktae.be_codebase.domain.keyword.domain.Keyword, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword> keywords = this.<io.github.muktae.be_codebase.domain.keyword.domain.Keyword, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword>createList("keywords", io.github.muktae.be_codebase.domain.keyword.domain.Keyword.class, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword.class, PathInits.DIRECT2);
 
     public final io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary recordSummary;
