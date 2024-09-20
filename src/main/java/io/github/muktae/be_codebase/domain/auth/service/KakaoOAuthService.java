@@ -58,26 +58,6 @@ public class KakaoOAuthService {
         return ResponseJwtToken.of(jwtProviderAccessToken, jwtProviderRefreshToken);
     }
 
-    @Transactional
-    public void deleteAccount(User user) {
-        Auth auth = authRepository.findByUser(user)
-                .orElseThrow(() -> new OAuthNotFoundException());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("token", auth.getRefreshToken());
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
-
-        String url = properties.getDeleteAccountUrl();
-        String response = restTemplate.postForObject(url, request, String.class);
-
-        if (response.contains("error")) throw new BusinessException(ErrorCode.OAUTH_SERVER_FAILED);
-
-        user.deleteUser();
-    }
 
     public OAuthAccessToken getAccessToken(String code) {
 

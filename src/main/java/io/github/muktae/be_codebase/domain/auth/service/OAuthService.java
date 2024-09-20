@@ -15,10 +15,4 @@ public class OAuthService {
     private final ValidateUserService validateUserService;
 
 
-    @Transactional
-    public void deleteAccount(Long userId) {
-        User user = validateUserService.validateUserById(userId);
-        kakaoOAuthService.deleteAccount(user);
-
-    }
 }

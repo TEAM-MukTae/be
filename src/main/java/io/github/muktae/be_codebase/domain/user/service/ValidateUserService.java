@@ -26,7 +26,6 @@ public class ValidateUserService {
     public User validateRegisteredUserByEmail(String email, SocialCode socialCode) {
 
         return userRepository.findAllByEmail(email).stream()
-                .filter(u -> u.getSocialCode() == socialCode)
                 .findFirst()
                 .orElse(null);
     }

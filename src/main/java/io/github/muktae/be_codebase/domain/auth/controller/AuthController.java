@@ -99,27 +99,4 @@ public class AuthController {
                 .setAccessToken(jwtProvider.createNewAccessTokenFromRefreshToken(refreshToken));
     }
 
-    @Operation(summary = "회원 탈퇴", description = "OAuth 로그인 탈퇴를 진행하고, 회원을 deleted 상태로 변경합니다.",
-            security = @SecurityRequirement(name = "Bearer Authentication"))
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "204",
-                    description = "소셜로그인 탈퇴 및 회원 삭제 성공"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "U001 : JwtToken의 userId에 해당하는 유저가 존재하지 않습니다.\t\n" +
-                            "O001 : JwtToken의 userId에 해당하는 유저의 Refresh token이 존재하지 않습니다.",
-                    content = @Content(schema = @Schema(hidden = true))),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "C004 : 소셜서버와의 통신을 실패했습니다.",
-                    content = @Content(schema = @Schema(hidden = true)))
-    })
-    @DeleteMapping("/users")
-    public ResponseEntity<Void> deleteAccount(@AuthUser JwtTokenInfo tokenInfo) {
-
-        oAuthService.deleteAccount(tokenInfo.getUserId());
-        return ResponseEntity.noContent()
-                .build();
-    }
 }
