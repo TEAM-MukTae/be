@@ -33,6 +33,8 @@ public enum ErrorCode {
     DUPLICATE_USER(400, "U003", "유저가 중복되었습니다."),
     USER_ACCESS_DENIED(403, "U005", "접근할 수 있는 권한이 없습니다."),
 
+    // Record
+    RECORD_NOT_FOUND(400, "R002", "레코드를 찾지 못했습니다"),
 
     // OAuth
     OAUTH_NOT_FOUND(404, "O001", "유저의 refresh token을 찾을 수 없습니다."),
