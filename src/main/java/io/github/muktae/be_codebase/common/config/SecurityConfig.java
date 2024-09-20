@@ -46,7 +46,8 @@ public class SecurityConfig {
             "/actuator/**",
             "/api/**",
             "/test",
-            "/api/v1/translate",
+            "/api/v1/translate/**",
+            "/api/v1/kafka/**",
             "/",
             ""
     };
@@ -80,7 +81,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/", "/swagger-ui/**", "/v3/api-docs/**", "/oauth2/kakao/login", "/oauth2/test")
                         .permitAll()
-                        .requestMatchers("/static/**", "/index.html", "/oauth2/**", "/test", "/api/v1/translate")
+                        .requestMatchers("/static/**", "/index.html", "/oauth2/**", "/test", "/api/v1/translate","/api/v1/kafka/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, permitAlls), UsernamePasswordAuthenticationFilter.class)
