@@ -1,4 +1,4 @@
-package io.github.muktae.be_codebase.common.translate.service;
+package io.github.muktae.be_codebase.domain.translate.service;
 
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.Translation;

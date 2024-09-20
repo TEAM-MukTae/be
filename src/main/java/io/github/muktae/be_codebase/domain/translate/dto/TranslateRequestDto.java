@@ -1,4 +1,4 @@
-package io.github.muktae.be_codebase.common.translate.dto;
+package io.github.muktae.be_codebase.domain.translate.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

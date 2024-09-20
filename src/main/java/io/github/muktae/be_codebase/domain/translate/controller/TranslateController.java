@@ -1,7 +1,7 @@
-package io.github.muktae.be_codebase.common.translate.controller;
+package io.github.muktae.be_codebase.domain.translate.controller;
 
-import io.github.muktae.be_codebase.common.translate.dto.TranslateRequestDto;
-import io.github.muktae.be_codebase.common.translate.service.TranslateService;
+import io.github.muktae.be_codebase.domain.translate.dto.TranslateRequestDto;
+import io.github.muktae.be_codebase.domain.translate.service.TranslateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
