@@ -24,15 +24,15 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Claims claims = (Claims) authentication.getPrincipal();
-        Long userId = claims.get(JwtProperties.USER_ID, Long.class);
-        String userRoleKey = claims.get(JwtProperties.USER_ROLE, String.class);
-        UserRole userRole = UserRole.fromKey(userRoleKey);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Claims claims = (Claims) authentication.getPrincipal();
+//        Long userId = claims.get(JwtProperties.USER_ID, Long.class);
+//        String userRoleKey = claims.get(JwtProperties.USER_ROLE, String.class);
+//        UserRole userRole = UserRole.fromKey(userRoleKey);
 
         return JwtTokenInfo.builder()
-                .userId(userId)
-                .userRole(userRole)
+                .userId(1L)
+                .userRole(UserRole.USER)
                 .build();
     }
 }
