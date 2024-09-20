@@ -4,17 +4,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.NoArgsConstructor;
 
 public class RecordRequest {
 
     @Getter
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Create {
-
-        @NotNull
-        private MultipartFile file;
 
         @NotNull
         private String title;

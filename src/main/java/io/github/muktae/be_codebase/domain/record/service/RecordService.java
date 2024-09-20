@@ -3,7 +3,6 @@ package io.github.muktae.be_codebase.domain.record.service;
 import io.github.muktae.be_codebase.common.exception.BusinessException;
 import io.github.muktae.be_codebase.common.exception.ErrorCode;
 import io.github.muktae.be_codebase.common.uploader.FileUploader;
-import io.github.muktae.be_codebase.domain.kafka.KafkaConsumer;
 import io.github.muktae.be_codebase.domain.kafka.KafkaProducer;
 import io.github.muktae.be_codebase.domain.record.domain.Record;
 import io.github.muktae.be_codebase.domain.record.dto.RecordRequest;
@@ -31,14 +30,14 @@ public class RecordService {
     private final FileUploader fileUploader;
 
     private final KafkaProducer kafkaProducer;
-    private final KafkaConsumer kafkaConsumer;
 
-    public RecordResponse.Create uploadWithKafka(Long userId, RecordRequest.Create recordRequest) {
+    @Transactional
+    public RecordResponse.Create uploadWithKafka(Long userId, RecordRequest.Create recordRequest, MultipartFile file) {
 
         User user = userRepository.findById((userId))
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
-        String url = uploadVoice(recordRequest.getFile());
+        String url = uploadVoice(file);
 
         Record record = Record.from(user, recordRequest.getTitle(), recordRequest.getText(), url);
         recordRepository.save(record);

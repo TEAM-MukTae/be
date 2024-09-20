@@ -8,8 +8,10 @@ import io.github.muktae.be_codebase.domain.record.dto.RecordResponse;
 import io.github.muktae.be_codebase.domain.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,13 +31,14 @@ public class RecordController {
         ).setStatus(HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<SuccessResponse<RecordResponse.Create>> uploadVoice(
             @AuthUser JwtTokenInfo jwtTokenInfo,
-            @RequestBody RecordRequest.Create recordRequest
+            @RequestPart(name = "recordRequest") RecordRequest.Create recordRequest,
+            @RequestPart(name = "file") MultipartFile file
     ) {
         return SuccessResponse.of(
-                recordService.uploadWithKafka(jwtTokenInfo.getUserId(), recordRequest)
+                recordService.uploadWithKafka(jwtTokenInfo.getUserId(), recordRequest, file)
         ).setStatus(HttpStatus.OK);
     }
 

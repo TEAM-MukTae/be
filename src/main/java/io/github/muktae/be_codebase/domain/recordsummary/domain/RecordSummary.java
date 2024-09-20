@@ -25,13 +25,19 @@ public class RecordSummary extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "r_id")
+    @OneToOne(mappedBy = "recordSummary",cascade = CascadeType.ALL, orphanRemoval = true)
     private Record record;
 
     private String summary;
 
     @OneToMany(mappedBy = "recordSummary", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Keyword> keywords = new ArrayList<>();
+    private List<Keyword> keywords;
 
+    public static RecordSummary from(Record record, String summary) {
+        return RecordSummary.builder()
+                .record(record)
+                .summary(summary)
+                .keywords(new ArrayList<>())
+                .build();
+    }
 }
