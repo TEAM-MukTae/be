@@ -23,23 +23,17 @@ public class User extends BaseEntityWithUpdate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     private String name;
 
-    @Column(name = "user_email")
     private String email;
 
-    @Column(name = "user_name")
     private String nickName;
 
     @Enumerated(EnumType.STRING)
-    private SocialCode socialCode;
-
-    @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-    private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bookmark> bookmarks = new ArrayList<>();
@@ -53,16 +47,12 @@ public class User extends BaseEntityWithUpdate {
     public User(String email, String nickName, SocialCode socialCode) {
         this.email = email;
         this.nickName = nickName;
-        this.socialCode = socialCode;
-        this.userRole = UserRole.USER;
     }
 
     public static User create(String email, SocialCode socialCode) {
         return User.builder()
                 .email(email)
                 .nickName("기본 닉네임")
-                .socialCode(socialCode)
-                .userRole(UserRole.USER)
                 .build();
     }
 
@@ -70,7 +60,4 @@ public class User extends BaseEntityWithUpdate {
         this.nickName = nickname;
     }
 
-    public void deleteUser() {
-        this.deletedAt = LocalDateTime.now();
-    }
 }

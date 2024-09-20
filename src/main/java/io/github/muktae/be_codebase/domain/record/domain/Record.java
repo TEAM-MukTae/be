@@ -26,10 +26,11 @@ public class Record extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "u_id")
     private User user;
 
     private String title;
@@ -44,8 +45,8 @@ public class Record extends BaseEntity {
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bookmark> bookmarks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RecordSummary> recordSummaries = new ArrayList<>();
+    @OneToOne(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RecordSummary recordSummary;
 
     public static Record from(User user, String title, String transcript, String recordUrl) {
         return Record.builder()

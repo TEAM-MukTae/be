@@ -5,23 +5,26 @@ import io.github.muktae.be_codebase.domain.record.domain.Record;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "record_summaries")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class RecordSummary extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "records_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "r_id")
     private Record record;
 
-    private String summaryText;
-
+    private String summary;
 
 }

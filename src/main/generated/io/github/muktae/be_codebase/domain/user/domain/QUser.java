@@ -27,8 +27,6 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final DateTimePath<java.time.LocalDateTime> deletedAt = createDateTime("deletedAt", java.time.LocalDateTime.class);
-
     public final StringPath email = createString("email");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -38,8 +36,6 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath nickName = createString("nickName");
 
     public final ListPath<io.github.muktae.be_codebase.domain.record.domain.Record, io.github.muktae.be_codebase.domain.record.domain.QRecord> records = this.<io.github.muktae.be_codebase.domain.record.domain.Record, io.github.muktae.be_codebase.domain.record.domain.QRecord>createList("records", io.github.muktae.be_codebase.domain.record.domain.Record.class, io.github.muktae.be_codebase.domain.record.domain.QRecord.class, PathInits.DIRECT2);
-
-    public final EnumPath<SocialCode> socialCode = createEnum("socialCode", SocialCode.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;

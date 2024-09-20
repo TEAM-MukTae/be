@@ -33,7 +33,7 @@ public class QRecord extends EntityPathBase<Record> {
 
     public final ListPath<io.github.muktae.be_codebase.domain.keyword.domain.Keyword, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword> keywords = this.<io.github.muktae.be_codebase.domain.keyword.domain.Keyword, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword>createList("keywords", io.github.muktae.be_codebase.domain.keyword.domain.Keyword.class, io.github.muktae.be_codebase.domain.keyword.domain.QKeyword.class, PathInits.DIRECT2);
 
-    public final ListPath<io.github.muktae.be_codebase.domain.recordsummary.domain.RecordSummary, io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary> recordSummaries = this.<io.github.muktae.be_codebase.domain.recordsummary.domain.RecordSummary, io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary>createList("recordSummaries", io.github.muktae.be_codebase.domain.recordsummary.domain.RecordSummary.class, io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary.class, PathInits.DIRECT2);
+    public final io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary recordSummary;
 
     public final StringPath recordUrl = createString("recordUrl");
 
@@ -61,6 +61,7 @@ public class QRecord extends EntityPathBase<Record> {
 
     public QRecord(Class<? extends Record> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.recordSummary = inits.isInitialized("recordSummary") ? new io.github.muktae.be_codebase.domain.recordsummary.domain.QRecordSummary(forProperty("recordSummary"), inits.get("recordSummary")) : null;
         this.user = inits.isInitialized("user") ? new io.github.muktae.be_codebase.domain.user.domain.QUser(forProperty("user")) : null;
     }
 

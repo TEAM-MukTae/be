@@ -18,7 +18,7 @@ public class Auth extends BaseEntity {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "u_id")
     private User user;
 
     private String refreshToken;

@@ -5,6 +5,7 @@ import io.github.muktae.be_codebase.domain.recordsummary.domain.RecordSummary;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -12,19 +13,21 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Keyword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "record_summary_id")
+    @JoinColumn(name = "rs_id")
     private RecordSummary recordSummary;
 
-    private String name;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "records_id")
+    @JoinColumn(name = "r_id")
     private Record record;
+
+    private String name;
 }

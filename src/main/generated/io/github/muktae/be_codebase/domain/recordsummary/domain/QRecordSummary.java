@@ -31,7 +31,7 @@ public class QRecordSummary extends EntityPathBase<RecordSummary> {
 
     public final io.github.muktae.be_codebase.domain.record.domain.QRecord record;
 
-    public final StringPath summaryText = createString("summaryText");
+    public final StringPath summary = createString("summary");
 
     public QRecordSummary(String variable) {
         this(RecordSummary.class, forVariable(variable), INITS);

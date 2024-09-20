@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "bookmark")
+@Table(name = "bookmarks")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,14 +17,15 @@ public class Bookmark extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "u_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "record_id")
+    @JoinColumn(name = "r_id")
     private Record record;
 
 }
