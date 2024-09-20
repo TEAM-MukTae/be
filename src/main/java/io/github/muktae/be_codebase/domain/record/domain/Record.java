@@ -3,7 +3,6 @@ package io.github.muktae.be_codebase.domain.record.domain;
 import io.github.muktae.be_codebase.common.entity.BaseEntity;
 import io.github.muktae.be_codebase.domain.bookmark.domain.Bookmark;
 import io.github.muktae.be_codebase.domain.keyword.domain.Keyword;
-import io.github.muktae.be_codebase.domain.record.dto.RecordRequest;
 import io.github.muktae.be_codebase.domain.recordsummary.domain.RecordSummary;
 import io.github.muktae.be_codebase.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -11,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +38,16 @@ public class Record extends BaseEntity {
     private String recordUrl;
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Keyword> keywords = new ArrayList<>();
+    private List<Keyword> keywords;
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Bookmark> bookmarks = new ArrayList<>();
+    private List<Bookmark> bookmarks;
 
-    @OneToOne(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rs_id")
     private RecordSummary recordSummary;
+
+    private boolean isSummarized = false;
 
     public static Record from(User user, String title, String transcript, String recordUrl) {
         return Record.builder()
@@ -54,7 +55,18 @@ public class Record extends BaseEntity {
                 .title(title)
                 .transcript(transcript)
                 .recordUrl(recordUrl)
+                .recordSummary(null)
+                .keywords(new ArrayList<>())
+                .bookmarks(new ArrayList<>())
                 .build();
     }
 
+    public void changeSummary(RecordSummary recordSummary) {
+        this.recordSummary = recordSummary;
+        this.isSummarized = true;
+    }
+
+    public boolean isSummarized() {
+        return isSummarized;
+    }
 }
