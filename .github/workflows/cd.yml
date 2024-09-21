@@ -20,5 +20,11 @@ jobs:
                   key: ${{ secrets.EC2_PRIVATE_KEY }}
                   script_stop: true
                   script: |
-                      pwd
-                      mkdir a
+                      sudo chown -R $USER:$USER /home/***/be/spring
+                      git config --global --add safe.directory /home/***/be/spring
+                      cd /home/ubuntu/be/spring
+                      git pull origin main
+                      cd ./be/spring
+                      ./gradlew clean build
+                      cd ..
+                      docker-compose up --build -d
