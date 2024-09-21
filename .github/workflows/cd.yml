@@ -20,5 +20,5 @@ jobs:
                   key: ${{ secrets.EC2_PRIVATE_KEY }}
                   script_stop: true
                   script: |
-                      cd /home/ubuntu/be/spring
-                      ls -al
+                      pwd
+                      mkdir a
