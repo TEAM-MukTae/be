@@ -1,11 +1,15 @@
 package io.github.muktae.be_codebase.domain.workbook.domain;
 
 
+import io.github.muktae.be_codebase.domain.questions.domain.Question;
 import io.github.muktae.be_codebase.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "workbooks")
@@ -25,13 +29,13 @@ public class WorkBook {
 
     private String title;
 
-    private String problemSet;
+    @OneToMany(mappedBy = "workBook", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions = new ArrayList<>();
 
-    public static WorkBook from(User user, String title, String problem_set) {
+    public static WorkBook from(User user, String title) {
         return WorkBook.builder()
                 .user(user)
                 .title(title)
-                .problemSet(problem_set)
                 .build();
     }
 

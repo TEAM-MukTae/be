@@ -24,7 +24,7 @@ public class QWorkBook extends EntityPathBase<WorkBook> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath problemSet = createString("problemSet");
+    public final ListPath<io.github.muktae.be_codebase.domain.questions.domain.Question, io.github.muktae.be_codebase.domain.questions.domain.QQuestion> questions = this.<io.github.muktae.be_codebase.domain.questions.domain.Question, io.github.muktae.be_codebase.domain.questions.domain.QQuestion>createList("questions", io.github.muktae.be_codebase.domain.questions.domain.Question.class, io.github.muktae.be_codebase.domain.questions.domain.QQuestion.class, PathInits.DIRECT2);
 
     public final StringPath title = createString("title");
 
