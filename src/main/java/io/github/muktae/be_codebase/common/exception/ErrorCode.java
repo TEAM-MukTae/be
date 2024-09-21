@@ -37,6 +37,9 @@ public enum ErrorCode {
     RECORD_NOT_FOUND(400, "R002", "레코드를 찾지 못했습니다"),
     ALREADY_SUMMARIZED(400, "R003", "이미 요약된 음성입니다."),
 
+    // workbook
+    WORKBOOK_NOT_FOUND(400, "W001", "문제집을 찾지 못했습니다."),
+
     // OAuth
     OAUTH_NOT_FOUND(404, "O001", "유저의 refresh token을 찾을 수 없습니다."),
     OAUTH_SERVER_FAILED(500, "O002", "OAuth 서버와의 통신 중 에러가 발생하였습니다."),

@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface WorkbookRepository extends JpaRepository<WorkBook, Long>
 {
     List<WorkBook> findAllByUser(User user);
-    Optional<WorkBook> findByUserAndId(User user, Long questionId);
+    Optional<WorkBook> findByUserAndId(User user, Long workbookId);
 }

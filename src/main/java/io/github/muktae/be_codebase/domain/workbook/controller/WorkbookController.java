@@ -4,15 +4,12 @@ import io.github.muktae.be_codebase.common.resolver.AuthUser;
 import io.github.muktae.be_codebase.common.response.SuccessResponse;
 import io.github.muktae.be_codebase.common.security.jwt.JwtTokenInfo;
 import io.github.muktae.be_codebase.domain.workbook.dto.QuestionRequest;
-import io.github.muktae.be_codebase.domain.workbook.dto.QuestionResponse;
-import io.github.muktae.be_codebase.domain.workbook.service.QuestionService;
+import io.github.muktae.be_codebase.domain.workbook.dto.WorkbookResponse;
+import io.github.muktae.be_codebase.domain.workbook.service.WorkbookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -20,9 +17,28 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/quiz")
-public class QuestionController {
+public class WorkbookController {
 
-    private final QuestionService questionService;
+    private final WorkbookService questionService;
+
+    @GetMapping("")
+    public ResponseEntity<SuccessResponse<List<WorkbookResponse.Create>>> getCreatedQuiz(
+            @AuthUser JwtTokenInfo jwtToken
+    ) {
+        return SuccessResponse.of(
+                questionService.getWorkbook(jwtToken.getUserId())
+        ).setStatus(HttpStatus.OK);
+    }
+
+    @GetMapping("/{workbookId}")
+    public ResponseEntity<SuccessResponse<WorkbookResponse.Detail>> getQuizDetail(
+            @AuthUser JwtTokenInfo jwtToken,
+            @PathVariable("workbookId") Long workbookId
+    ) {
+        return SuccessResponse.of(
+                questionService.getWorkbookDetail(jwtToken.getUserId(), workbookId)
+        ).setStatus(HttpStatus.OK);
+    }
 
     @PostMapping("")
     public ResponseEntity<SuccessResponse<Void>> createQuiz(
@@ -32,6 +48,5 @@ public class QuestionController {
     ) {
         questionService.uploadWithKafka(quizRequest.getIdList(), files);
         return ResponseEntity.noContent().build();
-
     }
 }
