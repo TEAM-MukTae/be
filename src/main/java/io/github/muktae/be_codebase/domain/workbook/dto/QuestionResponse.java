@@ -1,11 +1,9 @@
-package io.github.muktae.be_codebase.domain.question.dto;
+package io.github.muktae.be_codebase.domain.workbook.dto;
 
-import io.github.muktae.be_codebase.domain.record.dto.RecordResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class QuestionResponse
         private List<String> urlList;
         private List<Long> idList;
 
-        public static QuestionResponse.Create from(List<String> urlList, List<Long> idList) {
+        public static Create from(List<String> urlList, List<Long> idList) {
             return Create.builder()
                     .urlList(urlList)
                     .idList(idList)
