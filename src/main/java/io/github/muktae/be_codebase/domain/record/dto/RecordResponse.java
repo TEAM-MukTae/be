@@ -59,11 +59,16 @@ public class RecordResponse {
         private String summary;
 
         public static RecordResponse.Detail from(Record record) {
+            String summary = "요약되지 않음";
+            if (record.getRecordSummary() != null) {
+                summary = record.getRecordSummary().getSummary();
+            }
+
             return Detail.builder()
                     .id(record.getId())
                     .voiceUrl(record.getRecordUrl())
                     .text(record.getTranscript())
-                    .summary(record.getRecordSummary().getSummary())
+                    .summary(summary)
                     .build();
         }
     }
