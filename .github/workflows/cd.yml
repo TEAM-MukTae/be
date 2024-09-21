@@ -26,3 +26,4 @@ jobs:
                       git pull origin main
                       ./gradlew clean build
                       cd ..
+                      sudo docker-compose up --build -d
