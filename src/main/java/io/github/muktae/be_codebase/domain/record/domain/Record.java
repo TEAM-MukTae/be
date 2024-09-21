@@ -70,4 +70,8 @@ public class Record extends BaseEntity {
     public boolean isSummarized() {
         return isSummarized;
     }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
 }

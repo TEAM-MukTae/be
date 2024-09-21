@@ -21,4 +21,14 @@ public class RecordRequest {
         private String text;
 
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class EditTitle {
+
+        private String title;
+
+    }
 }

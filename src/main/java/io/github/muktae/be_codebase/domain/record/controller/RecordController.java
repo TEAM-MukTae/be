@@ -52,6 +52,16 @@ public class RecordController {
         ).setStatus(HttpStatus.OK);
     }
 
+    @PatchMapping("/{recordId}")
+    public ResponseEntity<SuccessResponse<Void>> updateRecordTitle(
+            @AuthUser JwtTokenInfo jwtTokenInfo,
+            @PathVariable("recordId") Long recordId,
+            @RequestBody RecordRequest.EditTitle recordEditRequest
+    ) {
+        recordService.editTitle(jwtTokenInfo.getUserId(), recordId, recordEditRequest.getTitle());
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{recordId}")
     public ResponseEntity<SuccessResponse<Void>> deleteRecord(
             @AuthUser JwtTokenInfo jwtTokenInfo,

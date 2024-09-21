@@ -99,4 +99,15 @@ public class RecordService {
         fileUploader.delete(url);
     }
 
+    @Transactional
+    public void editTitle(Long userId, Long recordId, String title) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        Record record = recordRepository.findByUserAndId(user, recordId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.RECORD_NOT_FOUND));
+
+        record.changeTitle(title);
+    }
 }
