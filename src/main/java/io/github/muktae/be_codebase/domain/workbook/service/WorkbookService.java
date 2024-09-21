@@ -39,11 +39,11 @@ public class WorkbookService {
     private final FileUploader fileUploader;
     private final ObjectMapper objectMapper;
 
-    public void uploadWithKafka(List<Long> idList, List<MultipartFile> files, String language) {
+    public void uploadWithKafka(String title, List<Long> idList, List<MultipartFile> files, String language) {
 
         try {
             List<String> urls = uploadPdf(files);
-            String jsonObject = objectMapper.writeValueAsString(KafkaWorkbookRequest.Create.from(urls, idList, language));
+            String jsonObject = objectMapper.writeValueAsString(KafkaWorkbookRequest.Create.from(title, urls, idList, language));
 
             kafkaProducer.sendObject("problem", jsonObject);
 

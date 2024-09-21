@@ -47,7 +47,7 @@ public class WorkbookController {
             @RequestPart(name = "quizRequest") QuestionRequest.Create quizRequest,
             @RequestPart(name = "files") List<MultipartFile> files
     ) {
-        questionService.uploadWithKafka(quizRequest.getIdList(), files, quizRequest.getLanguage());
+        questionService.uploadWithKafka(quizRequest.getTitle(), quizRequest.getIdList(), files, quizRequest.getLanguage());
         return ResponseEntity.noContent().build();
     }
 
