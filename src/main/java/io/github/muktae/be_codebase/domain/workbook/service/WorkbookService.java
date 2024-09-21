@@ -11,7 +11,8 @@ import io.github.muktae.be_codebase.domain.user.domain.User;
 import io.github.muktae.be_codebase.domain.user.repository.UserRepository;
 import io.github.muktae.be_codebase.domain.workbook.domain.WorkBook;
 import io.github.muktae.be_codebase.domain.workbook.dto.KafkaWorkBookResponse;
-import io.github.muktae.be_codebase.domain.workbook.dto.QuestionResponse;
+import io.github.muktae.be_codebase.domain.workbook.dto.KafkaWorkbookRequest;
+import io.github.muktae.be_codebase.domain.workbook.dto.WorkbookResponse;
 import io.github.muktae.be_codebase.domain.workbook.repository.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,9 +43,7 @@ public class WorkbookService {
 
         try {
             List<String> urls = uploadPdf(files);
-            String jsonObject = objectMapper.writeValueAsString(QuestionResponse.Create.from(urls, idList));
-
-            System.out.println("jsonObject = " + jsonObject);
+            String jsonObject = objectMapper.writeValueAsString(KafkaWorkbookRequest.Create.from(urls, idList));
 
             kafkaProducer.sendObject("problem", jsonObject);
 
@@ -58,8 +57,6 @@ public class WorkbookService {
     @KafkaListener(topics = PROBLEM_DONE_TOPIC, groupId = "my-group")
     @Transactional
     public void receiveQuestionFromKafka(String message) {
-
-        System.out.println("message = " + message);
 
         try {
             KafkaWorkBookResponse.Create receivedWorkbookFromKafka =
@@ -80,6 +77,26 @@ public class WorkbookService {
             log.error("Error deserializing message: " + e.getMessage());
         }
 
+    }
+
+    public List<WorkbookResponse.Create> getWorkbook(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        return workbookRepository.findAllByUser(user)
+                .stream()
+                .map(WorkbookResponse.Create::from)
+                .toList();
+    }
+
+    public WorkbookResponse.Detail getWorkbookDetail(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        WorkBook workBook = workbookRepository.findByUserAndId(user, workbookId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORKBOOK_NOT_FOUND));
+
+        return WorkbookResponse.Detail.from(workBook);
     }
 
 
