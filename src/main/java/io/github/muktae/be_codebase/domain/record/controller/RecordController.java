@@ -7,7 +7,6 @@ import io.github.muktae.be_codebase.domain.record.dto.RecordRequest;
 import io.github.muktae.be_codebase.domain.record.dto.RecordResponse;
 import io.github.muktae.be_codebase.domain.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

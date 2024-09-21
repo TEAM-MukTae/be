@@ -21,5 +21,8 @@ public class QuestionRequest
 
         @NotNull
         private List<Long> idList;
+
+        @NotNull
+        private String language;
     }
 }

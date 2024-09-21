@@ -79,6 +79,7 @@ public class RecordService {
         return RecordResponse.Detail.from(record);
     }
 
+    @Transactional
     public void deleteRecord(Long userId, Long recordId) {
 
         User user = userRepository.findById(userId)
@@ -91,7 +92,7 @@ public class RecordService {
             RecordSummary recordSummary = record.getRecordSummary();
             recordSummaryRepository.delete(recordSummary);
         }
-        
+
         String url = record.getRecordUrl();
 
         recordRepository.deleteById(record.getId());
