@@ -25,13 +25,13 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @PostMapping("")
-    public ResponseEntity<SuccessResponse<QuestionResponse.Create>> createQuiz(
+    public ResponseEntity<SuccessResponse<Void>> createQuiz(
             @AuthUser JwtTokenInfo jwtToken,
             @RequestPart(name = "quizRequest") QuestionRequest.Create quizRequest,
-            @RequestPart(name = "files") List<MultipartFile> files) {
-        return SuccessResponse.of(
-                questionService.uploadWithKafka(quizRequest.getIdList(), files)
-        ).setStatus(HttpStatus.OK);
+            @RequestPart(name = "files") List<MultipartFile> files
+    ) {
+        questionService.uploadWithKafka(quizRequest.getIdList(), files);
+        return ResponseEntity.noContent().build();
 
     }
 }

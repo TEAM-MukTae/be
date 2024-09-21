@@ -1,6 +1,7 @@
 package io.github.muktae.be_codebase.domain.questions.domain;
 
 import io.github.muktae.be_codebase.domain.questions.domain.converter.QuestionChoicesConverter;
+import io.github.muktae.be_codebase.domain.questions.dto.KafkaQuestionResponse;
 import io.github.muktae.be_codebase.domain.workbook.domain.WorkBook;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,15 @@ public class Question {
 
     private String explanation;
 
+    public static Question from(KafkaQuestionResponse.Create questionDto, WorkBook workbook) {
+        Question question = Question.builder()
+                .workBook(workbook)
+                .query(questionDto.getQuery())
+                .choices(questionDto.getChoices())
+                .answer(questionDto.getAnswer())
+                .explanation(questionDto.getExplanation())
+                .build();
+        workbook.getQuestions().add(question);
+        return question;
+    }
 }

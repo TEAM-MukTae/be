@@ -2,9 +2,17 @@ package io.github.muktae.be_codebase.domain.workbook.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.muktae.be_codebase.common.exception.BusinessException;
+import io.github.muktae.be_codebase.common.exception.ErrorCode;
 import io.github.muktae.be_codebase.common.uploader.FileUploader;
 import io.github.muktae.be_codebase.domain.kafka.KafkaProducer;
+import io.github.muktae.be_codebase.domain.questions.domain.Question;
+import io.github.muktae.be_codebase.domain.user.domain.User;
+import io.github.muktae.be_codebase.domain.user.repository.UserRepository;
+import io.github.muktae.be_codebase.domain.workbook.domain.WorkBook;
+import io.github.muktae.be_codebase.domain.workbook.dto.KafkaWorkBookResponse;
 import io.github.muktae.be_codebase.domain.workbook.dto.QuestionResponse;
+import io.github.muktae.be_codebase.domain.workbook.repository.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -23,39 +31,49 @@ import static io.github.muktae.be_codebase.common.constant.KafkaTopic.PROBLEM_DO
 @Transactional(readOnly = true)
 public class QuestionService {
 
-    private final FileUploader fileUploader;
+    private final UserRepository userRepository;
+    private final WorkbookRepository workbookRepository;
+
     private final KafkaProducer kafkaProducer;
+    private final FileUploader fileUploader;
     private final ObjectMapper objectMapper;
 
-    public QuestionResponse.Create uploadWithKafka(List<Long> idList, List<MultipartFile> files) {
-
-        QuestionResponse.Create questionResponse = null;
+    public void uploadWithKafka(List<Long> idList, List<MultipartFile> files) {
 
         try {
-
             List<String> urls = uploadPdf(files);
-            questionResponse = QuestionResponse.Create.from(urls, idList);
+            String jsonObject = objectMapper.writeValueAsString(QuestionResponse.Create.from(urls, idList));
 
-            String jsonObject = objectMapper.writeValueAsString(questionResponse);
             System.out.println("jsonObject = " + jsonObject);
+
             kafkaProducer.sendObject("problem", jsonObject);
 
-            return questionResponse;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             log.error("Error deserializing message: " + e.getMessage());
         }
 
-        return questionResponse;
     }
 
     @KafkaListener(topics = PROBLEM_DONE_TOPIC, groupId = "my-group")
     @Transactional
-    public void receiveSummaryFromKafka(String message) {
-        System.out.println("message = " + message);
-        try {
-            QuestionResponse.Create summaryRequest = objectMapper.readValue(message, QuestionResponse.Create.class);
+    public void receiveQuestionFromKafka(String message) {
 
+        System.out.println("message = " + message);
+
+        try {
+            KafkaWorkBookResponse.Create receivedWorkbookFromKafka =
+                    objectMapper.readValue(message, KafkaWorkBookResponse.Create.class);
+
+            User user = userRepository.findById(receivedWorkbookFromKafka.getUserId())
+                    .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+            WorkBook createdWorkbookEntity = WorkBook.from(user, receivedWorkbookFromKafka.getTitle());
+
+            receivedWorkbookFromKafka.getQuestions()
+                    .forEach(question -> Question.from(question, createdWorkbookEntity));
+
+            workbookRepository.save(createdWorkbookEntity);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();

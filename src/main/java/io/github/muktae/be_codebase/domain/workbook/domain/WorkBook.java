@@ -6,6 +6,7 @@ import io.github.muktae.be_codebase.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "workbooks")
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkBook {
@@ -36,6 +38,7 @@ public class WorkBook {
         return WorkBook.builder()
                 .user(user)
                 .title(title)
+                .questions(new ArrayList<>())
                 .build();
     }
 

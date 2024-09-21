@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-public class QuestionResponse
-{
+public class QuestionResponse {
     @Getter
     @Builder
     @AllArgsConstructor
