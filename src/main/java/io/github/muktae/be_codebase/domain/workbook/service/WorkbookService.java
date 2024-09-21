@@ -7,7 +7,6 @@ import io.github.muktae.be_codebase.common.exception.ErrorCode;
 import io.github.muktae.be_codebase.common.uploader.FileUploader;
 import io.github.muktae.be_codebase.domain.kafka.KafkaProducer;
 import io.github.muktae.be_codebase.domain.questions.domain.Question;
-import io.github.muktae.be_codebase.domain.record.domain.Record;
 import io.github.muktae.be_codebase.domain.user.domain.User;
 import io.github.muktae.be_codebase.domain.user.repository.UserRepository;
 import io.github.muktae.be_codebase.domain.workbook.domain.WorkBook;
@@ -100,6 +99,7 @@ public class WorkbookService {
         return WorkbookResponse.Detail.from(workBook);
     }
 
+    @Transactional
     public void deleteWorkbook(Long userId, Long workbookId) {
 
         User user = userRepository.findById(userId)
@@ -123,5 +123,16 @@ public class WorkbookService {
 
     private String uploadDocument(MultipartFile file) {
         return fileUploader.upload(file, "pdf/");
+    }
+
+    @Transactional
+    public void editTitle(Long userId, Long workbookId, String title) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        WorkBook workBook = workbookRepository.findByUserAndId(user, workbookId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.RECORD_NOT_FOUND));
+
+        workBook.changeTitle(title);
     }
 }

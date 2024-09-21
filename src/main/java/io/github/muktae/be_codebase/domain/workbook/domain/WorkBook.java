@@ -42,4 +42,7 @@ public class WorkBook {
                 .build();
     }
 
+    public void changeTitle(String title) {
+        this.title = title;
+    }
 }
