@@ -29,7 +29,7 @@ import static io.github.muktae.be_codebase.common.constant.KafkaTopic.PROBLEM_DO
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class QuestionService {
+public class WorkbookService {
 
     private final UserRepository userRepository;
     private final WorkbookRepository workbookRepository;

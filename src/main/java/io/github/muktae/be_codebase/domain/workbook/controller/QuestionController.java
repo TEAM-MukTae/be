@@ -4,10 +4,8 @@ import io.github.muktae.be_codebase.common.resolver.AuthUser;
 import io.github.muktae.be_codebase.common.response.SuccessResponse;
 import io.github.muktae.be_codebase.common.security.jwt.JwtTokenInfo;
 import io.github.muktae.be_codebase.domain.workbook.dto.QuestionRequest;
-import io.github.muktae.be_codebase.domain.workbook.dto.QuestionResponse;
-import io.github.muktae.be_codebase.domain.workbook.service.QuestionService;
+import io.github.muktae.be_codebase.domain.workbook.service.WorkbookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/v1/quiz")
 public class QuestionController {
 
-    private final QuestionService questionService;
+    private final WorkbookService questionService;
 
     @PostMapping("")
     public ResponseEntity<SuccessResponse<Void>> createQuiz(
