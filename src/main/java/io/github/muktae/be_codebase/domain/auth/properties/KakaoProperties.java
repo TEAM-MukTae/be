@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 @NoArgsConstructor
-@PropertySource({"classpath:application-prod.yml", "classpath:application-local.yml"})
+//@PropertySource({"classpath:application-prod.yml", "classpath:application-local.yml"})
+@PropertySource({"classpath:application-prod.yml"})
 public class KakaoProperties {
 
     @Value("${oauth2.kakao.api-key}")
