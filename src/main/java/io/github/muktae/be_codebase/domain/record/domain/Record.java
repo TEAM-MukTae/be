@@ -33,6 +33,7 @@ public class Record extends BaseEntity {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String transcript;
 
     private String recordUrl;
