@@ -4,6 +4,7 @@ import io.github.muktae.be_codebase.common.resolver.AuthUser;
 import io.github.muktae.be_codebase.common.response.SuccessResponse;
 import io.github.muktae.be_codebase.common.security.jwt.JwtTokenInfo;
 import io.github.muktae.be_codebase.domain.workbook.dto.QuestionRequest;
+import io.github.muktae.be_codebase.domain.workbook.dto.WorkbookRequest;
 import io.github.muktae.be_codebase.domain.workbook.dto.WorkbookResponse;
 import io.github.muktae.be_codebase.domain.workbook.service.WorkbookService;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +45,19 @@ public class WorkbookController {
     public ResponseEntity<SuccessResponse<Void>> createQuiz(
             @AuthUser JwtTokenInfo jwtToken,
             @RequestPart(name = "quizRequest") QuestionRequest.Create quizRequest,
-            @RequestPart(name = "files") List<MultipartFile> files,
-            @RequestPart(name = "language") String language
+            @RequestPart(name = "files") List<MultipartFile> files
     ) {
-        questionService.uploadWithKafka(quizRequest.getIdList(), files, language);
+        questionService.uploadWithKafka(quizRequest.getIdList(), files, quizRequest.getLanguage());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{workbookId}")
+    public ResponseEntity<SuccessResponse<Void>> updateQuizTitle(
+            @AuthUser JwtTokenInfo jwtTokenInfo,
+            @PathVariable("workbookId") Long workbookId,
+            @RequestBody WorkbookRequest.EditTitle quizEditRequest
+    ) {
+        questionService.editTitle(jwtTokenInfo.getUserId(), workbookId, quizEditRequest.getTitle());
         return ResponseEntity.noContent().build();
     }
 
