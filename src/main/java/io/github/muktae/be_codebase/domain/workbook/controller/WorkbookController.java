@@ -44,9 +44,10 @@ public class WorkbookController {
     public ResponseEntity<SuccessResponse<Void>> createQuiz(
             @AuthUser JwtTokenInfo jwtToken,
             @RequestPart(name = "quizRequest") QuestionRequest.Create quizRequest,
-            @RequestPart(name = "files") List<MultipartFile> files
+            @RequestPart(name = "files") List<MultipartFile> files,
+            @RequestPart(name = "language") String language
     ) {
-        questionService.uploadWithKafka(quizRequest.getIdList(), files);
+        questionService.uploadWithKafka(quizRequest.getIdList(), files, language);
         return ResponseEntity.noContent().build();
     }
 }
