@@ -52,6 +52,9 @@ public class User extends BaseEntity {
                 .name("박철흠")
                 .nickName("기본 닉네임")
                 .userRole(UserRole.USER)
+                .bookmarks(new ArrayList<>())
+                .workBooks(new ArrayList<>())
+                .records(new ArrayList<>())
                 .build();
     }
 
