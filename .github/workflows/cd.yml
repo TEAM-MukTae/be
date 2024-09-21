@@ -24,7 +24,6 @@ jobs:
                       git config --global --add safe.directory /home/***/be/spring
                       cd /home/ubuntu/be/spring
                       git pull origin main
-                      cd ./be/spring
                       ./gradlew clean build
                       cd ..
                       docker-compose up --build -d
