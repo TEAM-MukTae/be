@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import static io.github.muktae.be_codebase.common.constant.KafkaTopic.PROBLEM_DONE_TOPIC;
+import static io.github.muktae.be_codebase.common.constant.KafkaTopic.SUMMARY_DONE_TOPIC;
 
 @Slf4j
 @Service
@@ -28,7 +29,7 @@ public class RecordSummaryService {
     private final RecordRepository recordRepository;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = PROBLEM_DONE_TOPIC, groupId = "my-group")
+    @KafkaListener(topics = SUMMARY_DONE_TOPIC, groupId = "my-group")
     @Transactional
     public void receiveSummaryFromKafka(String message) {
         System.out.println("message = " + message);

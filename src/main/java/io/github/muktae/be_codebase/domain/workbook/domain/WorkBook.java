@@ -27,4 +27,12 @@ public class WorkBook {
 
     private String problemSet;
 
+    public static WorkBook from(User user, String title, String problem_set) {
+        return WorkBook.builder()
+                .user(user)
+                .title(title)
+                .problemSet(problem_set)
+                .build();
+    }
+
 }
