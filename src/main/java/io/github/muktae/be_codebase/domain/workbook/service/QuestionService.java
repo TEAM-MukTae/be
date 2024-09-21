@@ -33,7 +33,7 @@ public class QuestionService {
 
         try {
 
-            List<String> urls = uploadDocuments(files);
+            List<String> urls = uploadPdf(files);
             questionResponse = QuestionResponse.Create.from(urls, idList);
 
             String jsonObject = objectMapper.writeValueAsString(questionResponse);
@@ -65,7 +65,7 @@ public class QuestionService {
     }
 
 
-    private List<String> uploadDocuments(List<MultipartFile> files) {
+    private List<String> uploadPdf(List<MultipartFile> files) {
         List<String> urls = new ArrayList<>();
         files.forEach(file -> {
             String url = uploadDocument(file);
