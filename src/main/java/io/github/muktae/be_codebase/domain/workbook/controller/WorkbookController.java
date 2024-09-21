@@ -50,4 +50,13 @@ public class WorkbookController {
         questionService.uploadWithKafka(quizRequest.getIdList(), files, language);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{workbookId}")
+    public ResponseEntity<SuccessResponse<Void>> deleteQuiz(
+            @AuthUser JwtTokenInfo jwtTokenInfo,
+            @PathVariable("workbookId") Long workbookId
+    ) {
+        questionService.deleteWorkbook(jwtTokenInfo.getUserId(), workbookId);
+        return ResponseEntity.noContent().build();
+    }
 }

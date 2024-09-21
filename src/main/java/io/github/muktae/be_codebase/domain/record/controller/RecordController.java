@@ -7,6 +7,7 @@ import io.github.muktae.be_codebase.domain.record.dto.RecordRequest;
 import io.github.muktae.be_codebase.domain.record.dto.RecordResponse;
 import io.github.muktae.be_codebase.domain.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,14 @@ public class RecordController {
         return SuccessResponse.of(
                 recordService.getRecordDetail(jwtTokenInfo.getUserId(), recordId)
         ).setStatus(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{recordId}")
+    public ResponseEntity<SuccessResponse<Void>> deleteRecord(
+            @AuthUser JwtTokenInfo jwtTokenInfo,
+            @PathVariable("recordId") Long recordId
+    ) {
+        recordService.deleteRecord(jwtTokenInfo.getUserId(), recordId);
+        return ResponseEntity.noContent().build();
     }
 }

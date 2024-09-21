@@ -8,6 +8,8 @@ import io.github.muktae.be_codebase.domain.record.domain.Record;
 import io.github.muktae.be_codebase.domain.record.dto.RecordRequest;
 import io.github.muktae.be_codebase.domain.record.dto.RecordResponse;
 import io.github.muktae.be_codebase.domain.record.repository.RecordRepository;
+import io.github.muktae.be_codebase.domain.recordsummary.domain.RecordSummary;
+import io.github.muktae.be_codebase.domain.recordsummary.repository.RecordSummaryRepository;
 import io.github.muktae.be_codebase.domain.user.domain.User;
 import io.github.muktae.be_codebase.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import static io.github.muktae.be_codebase.common.constant.KafkaTopic.SUMMARY_TO
 public class RecordService {
 
     private final RecordRepository recordRepository;
+    private final RecordSummaryRepository recordSummaryRepository;
     private final UserRepository userRepository;
 
     private final FileUploader fileUploader;
@@ -75,4 +78,24 @@ public class RecordService {
 
         return RecordResponse.Detail.from(record);
     }
+
+    public void deleteRecord(Long userId, Long recordId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        Record record = recordRepository.findByUserAndId(user, recordId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.RECORD_NOT_FOUND));
+
+        if (record.isSummarized()) {
+            RecordSummary recordSummary = record.getRecordSummary();
+            recordSummaryRepository.delete(recordSummary);
+        }
+        
+        String url = record.getRecordUrl();
+
+        recordRepository.deleteById(record.getId());
+        fileUploader.delete(url);
+    }
+
 }

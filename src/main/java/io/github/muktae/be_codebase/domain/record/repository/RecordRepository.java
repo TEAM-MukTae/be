@@ -3,6 +3,7 @@ package io.github.muktae.be_codebase.domain.record.repository;
 
 import io.github.muktae.be_codebase.domain.record.domain.Record;
 import io.github.muktae.be_codebase.domain.user.domain.User;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 
     List<Record> findAllByUser(User user);
 
+    @EntityGraph(attributePaths = {"recordSummary"})
     Optional<Record> findByUserAndId(User user, Long recordId);
 
 }
