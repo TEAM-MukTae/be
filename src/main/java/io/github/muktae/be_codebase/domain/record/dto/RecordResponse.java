@@ -60,10 +60,9 @@ public class RecordResponse {
 
         public static RecordResponse.Detail from(Record record) {
             String summary = "요약되지 않음";
-            if (record.getRecordSummary() != null) {
+            if (record.isSummarized()) {
                 summary = record.getRecordSummary().getSummary();
             }
-
             return Detail.builder()
                     .id(record.getId())
                     .voiceUrl(record.getRecordUrl())
