@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-public class QuestionResponse {
+public class KafkaWorkbookRequest {
+
     @Getter
     @Builder
     @AllArgsConstructor
@@ -17,8 +18,8 @@ public class QuestionResponse {
         private List<String> urlList;
         private List<Long> idList;
 
-        public static Create from(List<String> urlList, List<Long> idList) {
-            return Create.builder()
+        public static KafkaWorkbookRequest.Create from(List<String> urlList, List<Long> idList) {
+            return KafkaWorkbookRequest.Create.builder()
                     .urlList(urlList)
                     .idList(idList)
                     .build();
