@@ -28,6 +28,7 @@ public class RecordSummary extends BaseEntity {
     @OneToOne(mappedBy = "recordSummary",cascade = CascadeType.ALL, orphanRemoval = true)
     private Record record;
 
+    @Column(columnDefinition = "TEXT")
     private String summary;
 
     @OneToMany(mappedBy = "recordSummary", cascade = CascadeType.ALL, orphanRemoval = true)
