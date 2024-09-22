@@ -17,10 +17,12 @@ public class KafkaWorkbookRequest {
 
         private List<String> urlList;
         private List<Long> idList;
+        private String title;
         private String language;
 
-        public static KafkaWorkbookRequest.Create from(List<String> urlList, List<Long> idList, String language) {
+        public static KafkaWorkbookRequest.Create from(String title, List<String> urlList, List<Long> idList, String language) {
             return Create.builder()
+                    .title(title)
                     .urlList(urlList)
                     .idList(idList)
                     .language(language)
