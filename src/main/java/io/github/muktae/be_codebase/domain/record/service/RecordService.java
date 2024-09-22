@@ -45,7 +45,7 @@ public class RecordService {
         Record record = Record.from(user, recordRequest.getTitle(), recordRequest.getText(), url);
         recordRepository.save(record);
 
-        kafkaProducer.sendMessage(SUMMARY_TOPIC, record.getId());
+        kafkaProducer.sendId(SUMMARY_TOPIC, record.getId());
 
         return RecordResponse.Create.from(record.getId());
     }
